@@ -8,11 +8,11 @@
     "build": "webpack --config webpack.prod.js",
     "lint": "eslint . --fix",
     "test": "jest",
-    "test:e2e": "node src/js/e2e/runner.js",
-    "test:e2e:headless": "cross-env HEADLESS=true node src/js/e2e/runner.js",
-    "test:e2e:debug": "cross-env DEBUG=true node src/js/e2e/runner.js",
-    "test:e2e:single": "cross-env node src/js/e2e/runner.js --spec",
     "coverage": "jest --coverage",
+    "pretest:e2e": "npm run build",
+    "test:e2e": "node src/js/e2e/run.js",
+    "pretest:e2e:headless": "npm run build",
+    "test:e2e:headless": "cross-env E2E_HEADLESS=true node src/js/e2e/run.js",
     "postinstall": "npx puppeteer browsers install",
     "preshow:coverage": "npm run coverage",
     "show:coverage": "live-server coverage/lcov-report",
@@ -20,7 +20,11 @@
     "show:dist": "http-server dist"
   },
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/src/js/e2e/"
+    ]
   },
   "author": "coursar",
   "license": "MIT",
