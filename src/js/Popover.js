@@ -1,9 +1,7 @@
 export default class Popover {
-  constructor(options = {}) {
-    this.title = options.title || "Popover title";
-    this.text =
-      options.text ||
-      "And here's some amazing content. It's very engaging. Right?";
+  constructor() {
+    this.title = null;
+    this.text = null;
     this.element = null;
     this.popoverElement = null;
     this.isVisible = false;
@@ -46,9 +44,25 @@ export default class Popover {
 
   // Показывает попап
   show(targetElement) {
+    // Обновляем данные из data-атрибутов перед показом
+    if (targetElement.dataset.title) {
+      this.title = targetElement.dataset.title;
+    }
+    if (targetElement.dataset.content) {
+      this.text = targetElement.dataset.content;
+    }
+
     if (!this.popoverElement) {
       this.popoverElement = this.createPopover();
       document.body.append(this.popoverElement);
+    } else {
+      // Обновляем существующий попап с новыми данными
+      const titleElement = this.popoverElement.querySelector(".popover-title");
+      const contentElement =
+        this.popoverElement.querySelector(".popover-content");
+
+      if (titleElement) titleElement.textContent = this.title;
+      if (contentElement) contentElement.textContent = this.text;
     }
 
     this.popoverElement.style.display = "block";

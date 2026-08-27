@@ -28,12 +28,12 @@ async function run() {
     const text = await page.$eval(".popover-content", (el) => el.textContent);
     assert.equal(
       title,
-      "Popover title",
+      "Custom Popover Title",
       "Заголовок попапа должен соответствовать переданному в Popover",
     );
     assert.equal(
       text,
-      "And here's some amazing content. It's very engaging. Right?",
+      "This is amazing content from data attributes!",
       "Текст попапа должен соответствовать переданному в Popover",
     );
 
